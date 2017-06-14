@@ -37,6 +37,10 @@
             getHeaderConfig() {
                 return this.model.headerConfig;
             }
+
+            updateHeaderConfig(newValue) {
+                this.model.headerConfig = newValue;
+            }
         }
 
         return {
