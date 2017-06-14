@@ -34,8 +34,8 @@
                             location.hash = event.target.getAttribute("data-hash");
                         });
 
-                        $("header select").change(function (event) {
-                            console.log('Change CSS');
+                        $("header select").change(function () {
+                            $("link[href='css/lion.css']")[0].disabled = $(this).find(":selected").val() !== 'lion';
                         });
                     });
 
@@ -114,6 +114,8 @@
         execute() {
             let note = new window.model.Note($('#title').val(), $('#description').val(), $('#importance').val(), $('#duedate').val());
             window.model.model.addNote(note);
+
+            $('')
 
             this.redirect("");
         }
