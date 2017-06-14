@@ -33,6 +33,10 @@
                         $("header button").click(function (event) {
                             location.hash = event.target.getAttribute("data-hash");
                         });
+
+                        $("header select").change(function (event) {
+                            console.log('Change CSS');
+                        });
                     });
 
                 config.controller.getRenderedTemplate()
