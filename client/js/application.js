@@ -8,15 +8,19 @@
                 this.templates = {};
             }
 
-            get(key) {
+            get(key, model) {
                 return new Promise((resolve) => {
-                    if (!this.templates[key]) {
-                        return $.get(`template/${key}.handlebars`, (template) => {
+                    if (this.templates[key]) {
+                        resolve();
+                    }
+                    else {
+                        $.get(`template/${key}.handlebars`, (template) => {
                             this.templates[key] = Handlebars.compile(template);
-                            resolve(this.templates[key]);
+                            resolve();
                         });
                     }
-                    resolve(this.templates[key]);
+                }).then((resolve) => {
+                    return this.templates[key](model);
                 });
             }
         }
@@ -36,8 +40,8 @@
 
 
 $(window).ready(() => {
-    window.templates.loader.get("header")
+    window.templates.loader.get("header", { createAvailable: true })
         .then((template) => {
-            $('header').html(template({}));
+            $('header').html(template);
         });
 });
