@@ -90,7 +90,7 @@
 
     class ListController extends BaseController {
         constructor() {
-            super("edit");
+            super("list");
         }
 
         getModel() {
