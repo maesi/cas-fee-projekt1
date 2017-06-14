@@ -112,7 +112,9 @@
 
     class SaveController extends ActionController {
         execute() {
-            // TODO: Notiz speichern
+            let note = new window.model.Note($('#title').val(), $('#description').val(), $('#importance').val(), $('#duedate').val());
+            window.model.model.addNote(note);
+
             this.redirect("");
         }
     }

@@ -1,6 +1,15 @@
 ;(function (namespace) {
     'use strict';
 
+    class Note {
+        constructor(title, description, importance, duedate) {
+            this.titel = title || "Ohne Titel";
+            this.beschreibung = description;
+            this.wichtigkeit = importance || 1;
+            this.faelligkeit = duedate || "2017-08-01"; // TODO: moment.js einbinden
+        }
+    };
+
     let model = (function () {
         let instance;
 
@@ -34,6 +43,10 @@
                 return this.model.notes;
             }
 
+            addNote(note) {
+                this.model.notes.push(note);
+            }
+
             getHeaderConfig() {
                 return this.model.headerConfig;
             }
@@ -54,4 +67,5 @@
     }());
 
     namespace.model = model.getInstance();
+    namespace.Note = Note;
 })(window.model = window.model || {});
