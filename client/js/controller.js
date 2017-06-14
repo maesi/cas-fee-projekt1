@@ -35,7 +35,11 @@
                         });
 
                         $("header select").change(function () {
-                            $("link[href='css/lion.css']")[0].disabled = $(this).find(":selected").val() !== 'lion';
+                            if($("link[href='css/lion.css']")[0]) {
+                                $("link[href='css/lion.css']")[0].remove();
+                            } else {
+                                $('head').append('<link rel="stylesheet" href="css/lion.css" type="text/css" />');
+                            }
                         });
                     });
 
