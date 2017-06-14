@@ -17,3 +17,33 @@ input, select, textarea {
     border: 2px solid #ccc;
     border-radius: 4px;
 }
+
+.note {
+    display: grid;
+    grid-template-columns: 100px auto 100px 100px;
+    grid-template-rows: auto;
+    grid-template-areas:
+            "faelligkeit titel wichtigkeit bearbeiten"
+            "erledigt beschreibung beschreibung bearbeiten";
+
+}
+
+.faelligkeit {
+    grid-area: faelligkeit;
+}
+.erledigt{
+    grid-area: erledigt;
+}
+.titel{
+    grid-area: titel;
+}
+.beschreibung{
+    grid-area: beschreibung;
+}
+.wichtigkeit{
+    grid-area: wichtigkeit;
+}
+.bearbeiten{
+    grid-area: bearbeiten;
+}
+
