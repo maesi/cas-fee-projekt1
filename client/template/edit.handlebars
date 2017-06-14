@@ -1,12 +1,22 @@
-<main>
-    {{#each this}}
-        <div class="note">
-            <div class="faelligkeit">{{faelligkeit}}</div>
-            <div class="erledigt">{{erledigt}}</div>
-            <div class="titel">{{titel}}</div>
-            <div class="beschreibung">{{beschreibung}}</div>
-            <div class="wichtigkeit">{{wichtigkeit}}</div>
-            <div class="bearbeiten"><button>Bearbeiten</button></div>
+<header>
+    <div>
+        <button>Nach Erledigungs-Datum</button>
+        <button>Nach Erstellungs-Datum</button>
+        <button>Nach Wichtigkeit</button>
+    </div>
+    <div>
+        <button>Erledigte anzeigen</button>
+    </div>
+</header>
+{{#each this}}
+    <div class="note">
+        <div class="faelligkeit">{{faelligkeit}}</div>
+        <div class="erledigt">{{erledigt}}</div>
+        <div class="titel">{{titel}}</div>
+        <div class="beschreibung">{{beschreibung}}</div>
+        <div class="wichtigkeit">{{wichtigkeit}}</div>
+        <div class="bearbeiten">
+            <button>Bearbeiten</button>
         </div>
-    {{/each}}
-</main>
+    </div>
+{{/each}}
