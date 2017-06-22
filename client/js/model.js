@@ -17,7 +17,8 @@
             constructor() {
                 this.model = {
                     headerConfig: {
-                        createAvailable: true
+                        createAvailable: true,
+                        style: 'lion'
                     },
                     notes: [
                         {
@@ -52,7 +53,9 @@
             }
 
             updateHeaderConfig(newValue) {
+                let style = newValue.style || this.model.style;
                 this.model.headerConfig = newValue;
+                this.model.style = style;
             }
         }
 

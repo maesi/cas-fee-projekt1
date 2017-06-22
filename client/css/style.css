@@ -25,6 +25,12 @@ button, input, select, textarea {
     height: 100%;
 }
 
+.selected, input:focus, textarea:focus, select:focus {
+    background-color: black;
+    border-color: white;
+    color: white;
+}
+
 .note {
     display: grid;
     grid-template-columns: 150px auto 100px 200px;
