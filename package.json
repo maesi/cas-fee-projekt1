@@ -1,0 +1,25 @@
+{
+  "name": "cas-fee-projekt1",
+  "version": "1.0.0",
+  "description": "Notizen Applikation für das CAS FEE",
+  "main": "index.js",
+  "directories": {
+    "doc": "doc"
+  },
+  "scripts": {
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/maesi/cas-fee-projekt1.git"
+  },
+  "author": "Marcel Arnold",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/maesi/cas-fee-projekt1/issues"
+  },
+  "homepage": "https://github.com/maesi/cas-fee-projekt1#readme",
+  "dependencies": {
+    "express": "^4.15.2"
+  }
+}
