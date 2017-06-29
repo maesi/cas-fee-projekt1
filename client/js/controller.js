@@ -141,11 +141,19 @@
                 $(window).trigger('hashchange');
             });
 
+            $("button[data-exclude]").click(function (event) {
+                let exclude = listModel.getExclude() === event.target.getAttribute("data-exclude") ? '' : event.target.getAttribute("data-exclude");
+                listModel.setExclude(exclude);
+                markSelected('data-exclude', exclude);
+                $(window).trigger('hashchange');
+            });
+
             $("button[data-id]").click(function (event) {
                 location.hash = '#edit/' + event.target.getAttribute("data-id");
             });
 
             markSelected('data-sort', listModel.getSort());
+            markSelected('data-exclude', listModel.getExclude());
         }
     }
 

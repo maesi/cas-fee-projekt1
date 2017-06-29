@@ -6,13 +6,13 @@
         <button data-sort="wichtigkeit">Nach Wichtigkeit</button>
     </div>
     <div>
-        <button data-include="erledigt">Erledigte anzeigen</button>
+        <button data-exclude="erledigt">Erledigte ausblenden</button>
     </div>
 </header>
 {{#each this}}
     <div class="note">
         <div class="faelligkeit">{{faelligkeitFormatiert}}</div>
-        <div class="erledigt">{{erledigt}}</div>
+        <div class="erledigt">{{erledigtFormatiert}}</div>
         <div class="titel">{{titel}}</div>
         <div class="beschreibung">{{beschreibung}}</div>
         <div class="wichtigkeit">{{wichtigkeit}}</div>

@@ -13,6 +13,10 @@
         faelligkeitFormatiert() {
             return momentjs(this.faelligkeit).format('DD.MM.YYYY');
         }
+
+        erledigtFormatiert() {
+            return this.erledigt ? momentjs(this.erledigt).format('DD.MM.YYYY') : '';
+        }
     }
     ;
 
@@ -20,6 +24,7 @@
     class ListModel {
         constructor() {
             this.sort = "wichtigkeit";
+            this.exclude = "erledigt";
         }
 
         getSort() {
@@ -28,6 +33,14 @@
 
         setSort(sort) {
             this.sort = sort;
+        }
+
+        getExclude() {
+            return this.exclude;
+        }
+
+        setExclude(exclude) {
+            this.exclude = exclude;
         }
     }
 
@@ -55,7 +68,15 @@
 
             getNotes() {
                 return rest.getAll().then((notes) => {
-                    return notes.map((note) => Object.assign(new Note, note));
+                    return notes
+                        .map((note) => Object.assign(new Note, note))
+                        .filter((note) => {
+                            let exlude = namespace.list.getExclude();
+                            if(exlude) {
+                                return !note[exlude];
+                            }
+                            return true;
+                        });
                 })
                     .then((notes) => {
                         let _getComparable = (o) => {
