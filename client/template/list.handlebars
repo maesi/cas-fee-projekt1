@@ -1,11 +1,12 @@
 <header>
     <div>
-        <button>Nach Erledigungs-Datum</button>
-        <button>Nach Erstellungs-Datum</button>
-        <button>Nach Wichtigkeit</button>
+        <button data-sort="erledigt">Nach Erledigungs-Datum</button>
+        <button data-sort="erstellt">Nach Erstellungs-Datum</button>
+        <button data-sort="faelligkeit">Nach Fälligkeits-Datum</button>
+        <button data-sort="wichtigkeit">Nach Wichtigkeit</button>
     </div>
     <div>
-        <button>Erledigte anzeigen</button>
+        <button data-include="erledigt">Erledigte anzeigen</button>
     </div>
 </header>
 {{#each this}}

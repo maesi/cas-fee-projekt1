@@ -13,7 +13,23 @@
         faelligkeitFormatiert() {
             return momentjs(this.faelligkeit).format('DD.MM.YYYY');
         }
-    };
+    }
+    ;
+
+
+    class ListModel {
+        constructor() {
+            this.sort = "wichtigkeit";
+        }
+
+        getSort() {
+            return this.sort;
+        }
+
+        setSort(sort) {
+            this.sort = sort;
+        }
+    }
 
     let model = (function () {
         let instance;
@@ -28,8 +44,7 @@
                         {
                             label: 'Löwe',
                             value: 'lion'
-                        },
-                        {
+                        }, {
                             label: 'Panda',
                             value: 'panda',
                             selected: true
@@ -41,7 +56,20 @@
             getNotes() {
                 return rest.getAll().then((notes) => {
                     return notes.map((note) => Object.assign(new Note, note));
-                });
+                })
+                    .then((notes) => {
+                        let _getComparable = (o) => {
+                            let value = o[namespace.list.getSort()];
+                            if(isNaN(value)) {
+                                return momentjs(value).format('YYYYMMDD');
+                            }
+                            return value * -1;
+                        };
+                        notes.sort((a, b) => {
+                            return _getComparable(a) - _getComparable(b);
+                        });
+                        return notes;
+                    });
             }
 
             createNote(titel, beschreibung, wichtigkeit, faelligkeit) {
@@ -89,4 +117,5 @@
     }());
 
     namespace.model = model.getInstance();
+    namespace.list = new ListModel();
 })(window.model = window.model || {}, window.service.rest, window.moment);

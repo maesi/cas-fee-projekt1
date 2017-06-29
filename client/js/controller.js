@@ -1,4 +1,4 @@
-;(function (namespace, model, templates) {
+;(function (namespace, model, listModel, templates) {
     'use strict';
 
     class ApplicationController {
@@ -131,9 +131,21 @@
         }
 
         addListener() {
-            $("main button").click(function (event) {
+            let markSelected = (key, value) => {
+                $("button["+key+"]").removeClass('selected');
+                $("button["+key+"='"+value+"']").addClass('selected');
+            };
+            $("button[data-sort]").click(function (event) {
+                listModel.setSort(event.target.getAttribute("data-sort"));
+                markSelected('data-sort', listModel.getSort());
+                $(window).trigger('hashchange');
+            });
+
+            $("button[data-id]").click(function (event) {
                 location.hash = '#edit/' + event.target.getAttribute("data-id");
             });
+
+            markSelected('data-sort', listModel.getSort());
         }
     }
 
@@ -159,4 +171,4 @@
     }
 
     namespace.controller = new ApplicationController();
-})(window.app = window.app || {}, window.model.model, window.templates);
+})(window.app = window.app || {}, window.model.model, window.model.list, window.templates);
