@@ -1,12 +1,12 @@
-;(function (namespace, rest) {
+;(function (namespace, rest, momentjs) {
     'use strict';
 
     class Note {
         constructor(title, description, importance, duedate) {
-            this.titel = title || "Ohne Titel";
+            this.titel = title || "Default Titel";
             this.beschreibung = description;
             this.wichtigkeit = importance || 1;
-            this.faelligkeit = duedate || "2017-08-01"; // TODO: moment.js einbinden
+            this.faelligkeit = duedate || momentjs().add(7, 'days').format('YYYY-MM-DD');
         }
     };
 
@@ -49,6 +49,10 @@
                 return rest.getById(id);
             }
 
+            getEmptyNote() {
+                return new Note();
+            }
+
             getHeaderConfig() {
                 return this.headerConfig;
             }
@@ -75,4 +79,4 @@
     }());
 
     namespace.model = model.getInstance();
-})(window.model = window.model || {}, window.service.rest);
+})(window.model = window.model || {}, window.service.rest, window.moment);

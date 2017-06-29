@@ -103,7 +103,7 @@
             if(id) {
                 return model.getNote(id);
             } else {
-                return {};
+                return model.getEmptyNote();
             }
         }
 
