@@ -7,6 +7,11 @@
             this.beschreibung = description;
             this.wichtigkeit = importance || 1;
             this.faelligkeit = duedate || momentjs().add(7, 'days').format('YYYY-MM-DD');
+            this.erstellt = momentjs().format('YYYY-MM-DD');
+        }
+
+        faelligkeitFormatiert() {
+            return momentjs(this.faelligkeit).format('DD.MM.YYYY');
         }
     };
 
@@ -34,7 +39,9 @@
             }
 
             getNotes() {
-                return rest.getAll();
+                return rest.getAll().then((notes) => {
+                    return notes.map((note) => Object.assign(new Note, note));
+                });
             }
 
             createNote(titel, beschreibung, wichtigkeit, faelligkeit) {
@@ -46,7 +53,10 @@
             }
 
             getNote(id) {
-                return rest.getById(id);
+                return rest.getById(id)
+                    .then((note) => {
+                        return Object.assign(new Note, note);
+                    });
             }
 
             getEmptyNote() {
