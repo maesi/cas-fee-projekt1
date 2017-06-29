@@ -5,16 +5,16 @@
         constructor() {
             this.routings = [
                 {
-                    hash: "#edit",
+                    regex: /#edit\/\w{16}/i,
                     controller: new FormController()
                 }, {
-                    hash: "#create",
+                    regex: /#create/i,
                     controller: new FormController()
                 }, {
-                    hash: "#save",
+                    regex: /#save/i,
                     controller: new SaveController()
                 }, {
-                    hash: "",
+                    regex: /\s*/i,
                     controller: new ListController()
                 }
             ];
@@ -23,7 +23,7 @@
         render() {
             let hash = location.hash;
             let config = this.routings.find((config) => {
-                return config.hash === hash;
+                return config.regex.test(hash);
             });
             if(config.controller instanceof BaseController) {
                 config.controller.updateActionConfig();
@@ -54,10 +54,7 @@
                         setStyle();
                     });
 
-                config.controller.getRenderedTemplate()
-                    .then((template) => {
-                        $('main').html(template);
-                    });
+                config.controller.setContent();
             } else if(config.controller instanceof ActionController) {
                 config.controller.execute();
             }
@@ -67,6 +64,14 @@
     class BaseController {
         constructor(template) {
             this.template = template;
+        }
+
+        setContent() {
+            window.templates.loader.get(this.template, this.getModel())
+                .then((template) => {
+                    $('main').html(template);
+                    this.addListener();
+                });
         }
 
         getRenderedTemplate() {
@@ -84,11 +89,22 @@
         getActionConfig() {
             return {};
         }
+
+        addListener() {}
     }
 
     class FormController extends BaseController {
         constructor() {
             super("form");
+        }
+
+        getModel() {
+            let id = /\w{16}/i.exec(location.hash);
+            if(id) {
+                return model.getNote(id);
+            } else {
+                return {};
+            }
         }
 
         getActionConfig() {
@@ -113,6 +129,12 @@
                 createAvailable: true
             };
         }
+
+        addListener() {
+            $("main button").click(function (event) {
+                location.hash = '#edit/' + event.target.getAttribute("data-id");
+            });
+        }
     }
 
     class ActionController {
@@ -127,7 +149,11 @@
 
     class SaveController extends ActionController {
         execute() {
-            model.createNote($('#title').val(), $('#description').val(), $('#importance').val(), $('#duedate').val());
+            if($('#id').val()) {
+                model.updateNote($('#id').val(), $('#title').val(), $('#description').val(), $('#importance').val(), $('#duedate').val());
+            } else {
+                model.createNote($('#title').val(), $('#description').val(), $('#importance').val(), $('#duedate').val());
+            }
             this.redirect("");
         }
     }

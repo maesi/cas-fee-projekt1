@@ -41,6 +41,14 @@
                 rest.create(new Note(titel, beschreibung, wichtigkeit, faelligkeit));
             }
 
+            updateNote(id, titel, beschreibung, wichtigkeit, faelligkeit) {
+                rest.update(id, new Note(titel, beschreibung, wichtigkeit, faelligkeit));
+            }
+
+            getNote(id) {
+                return rest.getById(id);
+            }
+
             getHeaderConfig() {
                 return this.headerConfig;
             }

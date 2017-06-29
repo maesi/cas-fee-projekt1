@@ -25,8 +25,8 @@
         return execute({method: 'POST', data: note});
     }
 
-    function update(note) {
-        return execute({url:'/notes/' + note._id, method: 'PUT', data: note});
+    function update(id, note) {
+        return execute({url:'/notes/' + id, method: 'PUT', data: note});
     }
 
     service.rest = {
