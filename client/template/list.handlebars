@@ -12,7 +12,7 @@
 {{#each this}}
     <div class="note">
         <div class="faelligkeit">{{faelligkeitFormatiert}}</div>
-        <div class="erledigt">{{erledigtFormatiert}}</div>
+        <div class="erledigt"><input type="checkbox" name="finished" value="{{_id}}" {{#if erledigtFormatiert}}checked="checked"{{/if}}/> finished {{erledigtFormatiert}}</div>
         <div class="titel">{{titel}}</div>
         <div class="beschreibung">{{beschreibung}}</div>
         <div class="wichtigkeit">{{wichtigkeit}}</div>

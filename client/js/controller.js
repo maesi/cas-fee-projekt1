@@ -135,12 +135,29 @@
                 $("button["+key+"]").removeClass('selected');
                 $("button["+key+"='"+value+"']").addClass('selected');
             };
+
+            this.addSortListener(markSelected);
+            this.addEditListener();
+            this.addExcludeListener(markSelected);
+            this.addFinishedListener();
+        }
+
+        addSortListener(markSelected) {
             $("button[data-sort]").click(function (event) {
                 listModel.setSort(event.target.getAttribute("data-sort"));
                 markSelected('data-sort', listModel.getSort());
                 $(window).trigger('hashchange');
             });
+            markSelected('data-sort', listModel.getSort());
+        }
 
+        addEditListener() {
+            $("button[data-id]").click(function (event) {
+                location.hash = '#edit/' + event.target.getAttribute("data-id");
+            });
+        }
+
+        addExcludeListener(markSelected) {
             $("button[data-exclude]").click(function (event) {
                 let exclude = listModel.getExclude() === event.target.getAttribute("data-exclude") ? '' : event.target.getAttribute("data-exclude");
                 listModel.setExclude(exclude);
@@ -148,12 +165,16 @@
                 $(window).trigger('hashchange');
             });
 
-            $("button[data-id]").click(function (event) {
-                location.hash = '#edit/' + event.target.getAttribute("data-id");
-            });
-
-            markSelected('data-sort', listModel.getSort());
             markSelected('data-exclude', listModel.getExclude());
+        }
+
+        addFinishedListener() {
+            $("main input[type='checkbox'").change(function (event) {
+                model.setFinished($(this).val(), event.target.checked)
+                    .then(() => {
+                        $(window).trigger('hashchange');
+                    });
+            });
         }
     }
 

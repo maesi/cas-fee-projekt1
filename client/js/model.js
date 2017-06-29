@@ -11,11 +11,11 @@
         }
 
         faelligkeitFormatiert() {
-            return momentjs(this.faelligkeit).format('DD.MM.YYYY');
+            return momentjs(this.faelligkeit).fromNow();
         }
 
         erledigtFormatiert() {
-            return this.erledigt ? momentjs(this.erledigt).format('DD.MM.YYYY') : '';
+            return this.erledigt ? `[${momentjs(this.erledigt).fromNow()}]` : '';
         }
     }
     ;
@@ -80,7 +80,7 @@
                 })
                     .then((notes) => {
                         let _getComparable = (o) => {
-                            let value = o[namespace.list.getSort()];
+                            let value = o[namespace.list.getSort()] || -Infinity;
                             if(isNaN(value)) {
                                 return momentjs(value).format('YYYYMMDD');
                             }
@@ -98,13 +98,27 @@
             }
 
             updateNote(id, titel, beschreibung, wichtigkeit, faelligkeit) {
-                rest.update(id, new Note(titel, beschreibung, wichtigkeit, faelligkeit));
+                let note = new Note(titel, beschreibung, wichtigkeit, faelligkeit);
+                note._id = id;
+                this.update(note);
+            }
+
+            update(note) {
+                rest.update(note._id, note);
             }
 
             getNote(id) {
                 return rest.getById(id)
                     .then((note) => {
                         return Object.assign(new Note, note);
+                    });
+            }
+
+            setFinished(id, finished) {
+                return this.getNote(id)
+                    .then((note) => {
+                        note.erledigt = finished ? momentjs().format('YYYY-MM-DD') : undefined;
+                        return this.update(note);
                     });
             }
 

@@ -24,6 +24,11 @@ button, input, select, textarea {
     width: 200px;
     height: 100%;
 }
+input[type=checkbox] {
+    height: auto;
+    width: 15px;
+    border: 1px solid black;
+}
 
 .selected, input:focus, textarea:focus, select:focus {
     background-color: black;
@@ -33,7 +38,7 @@ button, input, select, textarea {
 
 .note {
     display: grid;
-    grid-template-columns: 150px auto 100px 200px;
+    grid-template-columns: 250px auto 100px 200px;
     grid-template-rows: auto;
     grid-template-areas:
             "faelligkeit titel wichtigkeit bearbeiten"
