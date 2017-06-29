@@ -5,7 +5,8 @@
 </div>
 <div>
     <select>
-        <option value="panda">Panda-Style</option>
-        <option value="lion">Löwen-Style</option>
+    {{#each style}}
+        <option value="{{value}}" {{#if selected}}selected="selected"{{/if}}>{{label}}</option>
+    {{/each}}
     </select>
 </div>

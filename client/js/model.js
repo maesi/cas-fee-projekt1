@@ -19,7 +19,17 @@
                     actions: {
                         createAvailable: true
                     },
-                    style: 'lion'
+                    style: [
+                        {
+                            label: 'Löwe',
+                            value: 'lion',
+                            selected: true
+                        },
+                        {
+                            label: 'Panda',
+                            value: 'panda'
+                        }
+                    ]
                 };
             }
 
@@ -37,6 +47,12 @@
 
             updateActionConfig(config) {
                 this.headerConfig.actions = config;
+            }
+
+            setActiveStyle(value) {
+                this.headerConfig.style.forEach((style) => {
+                    style.selected = style.value === value;
+                })
             }
         }
 

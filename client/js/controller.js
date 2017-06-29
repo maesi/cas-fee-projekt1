@@ -34,13 +34,24 @@
                             location.hash = event.target.getAttribute("data-hash");
                         });
 
-                        $("header select").change(function () {
-                            if($("link[href='css/lion.css']")[0]) {
-                                $("link[href='css/lion.css']")[0].remove();
+                        let setStyle = () => {
+                            if($("header select").val() === 'lion') {
+                                if(!$("link[href='css/lion.css']")[0]) {
+                                    $('head').append('<link rel="stylesheet" href="css/lion.css" type="text/css" />');
+                                }
                             } else {
-                                $('head').append('<link rel="stylesheet" href="css/lion.css" type="text/css" />');
+                                if($("link[href='css/lion.css']")[0]) {
+                                    $("link[href='css/lion.css']")[0].remove();
+                                }
                             }
+                        };
+
+                        $("header select").change(function () {
+                            window.model.model.setActiveStyle($("header select").val());
+                            setStyle();
                         });
+
+                        setStyle();
                     });
 
                 config.controller.getRenderedTemplate()
