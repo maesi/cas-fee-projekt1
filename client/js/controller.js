@@ -26,7 +26,7 @@
                 return config.hash === hash;
             });
             if(config.controller instanceof BaseController) {
-                config.controller.updateHeaderConfig();
+                config.controller.updateActionConfig();
                 window.templates.loader.get("header", window.model.model.getHeaderConfig())
                     .then((template) => {
                         $('header').html(template);
@@ -62,15 +62,15 @@
             return window.templates.loader.get(this.template, this.getModel());
         }
 
-        updateHeaderConfig() {
-            window.model.model.updateHeaderConfig(this.getHeaderConfig());
+        updateActionConfig() {
+            window.model.model.updateActionConfig(this.getActionConfig());
         }
 
         getModel() {
             return {};
         }
 
-        getHeaderConfig() {
+        getActionConfig() {
             return {};
         }
     }
@@ -80,7 +80,7 @@
             super("form");
         }
 
-        getHeaderConfig() {
+        getActionConfig() {
             return {
                 saveAvailable: true,
                 cancelAvailable: true
@@ -97,7 +97,7 @@
             return window.model.model.getNotes();
         }
 
-        getHeaderConfig() {
+        getActionConfig() {
             return {
                 createAvailable: true
             };
@@ -119,7 +119,7 @@
             let note = new window.model.Note($('#title').val(), $('#description').val(), $('#importance').val(), $('#duedate').val());
             window.model.model.addNote(note);
 
-            $('')
+            $('');
 
             this.redirect("");
         }
