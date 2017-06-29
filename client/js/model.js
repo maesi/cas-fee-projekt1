@@ -22,12 +22,12 @@
                     style: [
                         {
                             label: 'Löwe',
-                            value: 'lion',
-                            selected: true
+                            value: 'lion'
                         },
                         {
                             label: 'Panda',
-                            value: 'panda'
+                            value: 'panda',
+                            selected: true
                         }
                     ]
                 };
@@ -37,8 +37,8 @@
                 return rest.getAll();
             }
 
-            addNote(note) {
-                rest.create(note);
+            createNote(titel, beschreibung, wichtigkeit, faelligkeit) {
+                rest.create(new Note(titel, beschreibung, wichtigkeit, faelligkeit));
             }
 
             getHeaderConfig() {
@@ -67,5 +67,4 @@
     }());
 
     namespace.model = model.getInstance();
-    namespace.Note = Note;
 })(window.model = window.model || {}, window.service.rest);

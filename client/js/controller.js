@@ -1,4 +1,4 @@
-;(function (namespace) {
+;(function (namespace, model, templates) {
     'use strict';
 
     class ApplicationController {
@@ -27,7 +27,7 @@
             });
             if(config.controller instanceof BaseController) {
                 config.controller.updateActionConfig();
-                window.templates.loader.get("header", window.model.model.getHeaderConfig())
+                templates.loader.get("header", model.getHeaderConfig())
                     .then((template) => {
                         $('header').html(template);
                         $("header button").click(function (event) {
@@ -47,7 +47,7 @@
                         };
 
                         $("header select").change(function () {
-                            window.model.model.setActiveStyle($("header select").val());
+                            model.setActiveStyle($("header select").val());
                             setStyle();
                         });
 
@@ -70,11 +70,11 @@
         }
 
         getRenderedTemplate() {
-            return window.templates.loader.get(this.template, this.getModel());
+            return templates.loader.get(this.template, this.getModel());
         }
 
         updateActionConfig() {
-            window.model.model.updateActionConfig(this.getActionConfig());
+            model.updateActionConfig(this.getActionConfig());
         }
 
         getModel() {
@@ -105,7 +105,7 @@
         }
 
         getModel() {
-            return window.model.model.getNotes();
+            return model.getNotes();
         }
 
         getActionConfig() {
@@ -127,14 +127,10 @@
 
     class SaveController extends ActionController {
         execute() {
-            let note = new window.model.Note($('#title').val(), $('#description').val(), $('#importance').val(), $('#duedate').val());
-            window.model.model.addNote(note);
-
-            $('');
-
+            model.createNote($('#title').val(), $('#description').val(), $('#importance').val(), $('#duedate').val());
             this.redirect("");
         }
     }
 
     namespace.controller = new ApplicationController();
-})(window.app = window.app || {});
+})(window.app = window.app || {}, window.model.model, window.templates);
