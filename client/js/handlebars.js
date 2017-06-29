@@ -8,7 +8,7 @@
                 this.templates = {};
             }
 
-            get(key, model) {
+            get(key, valueOrPromise) {
                 return new Promise((resolve) => {
                     if (this.templates[key]) {
                         resolve();
@@ -19,8 +19,13 @@
                             resolve();
                         });
                     }
-                }).then((resolve) => {
-                    return this.templates[key](model);
+                }).then(() => {
+                    let promise = valueOrPromise && typeof valueOrPromise.then === 'Function' ? valueOrPromise : new Promise((resolve) => {
+                        resolve(valueOrPromise);
+                    });
+                    return promise.then((model) => {
+                        return this.templates[key](model);
+                    });
                 });
             }
         }

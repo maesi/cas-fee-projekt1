@@ -1,4 +1,4 @@
-;(function (namespace) {
+;(function (namespace, rest) {
     'use strict';
 
     class Note {
@@ -41,11 +41,11 @@
             }
 
             getNotes() {
-                return this.model.notes;
+                return rest.getAll();
             }
 
             addNote(note) {
-                this.model.notes.push(note);
+                rest.create(note);
             }
 
             getHeaderConfig() {
@@ -71,4 +71,4 @@
 
     namespace.model = model.getInstance();
     namespace.Note = Note;
-})(window.model = window.model || {});
+})(window.model = window.model || {}, window.service.rest);
