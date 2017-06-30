@@ -1,4 +1,4 @@
-;(function (namespace, model, listModel, templates) {
+;(function (namespace, noteModel, headerModel, listModel, templates) {
     'use strict';
 
     class ApplicationController {
@@ -26,8 +26,8 @@
                 return config.regex.test(hash);
             });
             if(config.controller instanceof BaseController) {
-                config.controller.updateActionConfig();
-                templates.loader.get("header", model.getHeaderConfig())
+                config.controller.updateActions();
+                templates.loader.get("header", headerModel.getModel())
                     .then((template) => {
                         $('header').html(template);
                         $("header button").click(function (event) {
@@ -47,7 +47,7 @@
                         };
 
                         $("header select").change(function () {
-                            model.setActiveStyle($("header select").val());
+                            headerModel.setActiveStyle($("header select").val());
                             setStyle();
                         });
 
@@ -78,15 +78,15 @@
             return templates.loader.get(this.template, this.getModel());
         }
 
-        updateActionConfig() {
-            model.updateActionConfig(this.getActionConfig());
+        updateActions() {
+            headerModel.updateActions(this.getActions());
         }
 
         getModel() {
             return {};
         }
 
-        getActionConfig() {
+        getActions() {
             return {};
         }
 
@@ -101,13 +101,13 @@
         getModel() {
             let id = /\w{16}/i.exec(location.hash);
             if(id) {
-                return model.getNote(id);
+                return noteModel.getNote(id);
             } else {
-                return model.getEmptyNote();
+                return noteModel.getEmptyNote();
             }
         }
 
-        getActionConfig() {
+        getActions() {
             return {
                 saveAvailable: true,
                 cancelAvailable: true
@@ -121,10 +121,10 @@
         }
 
         getModel() {
-            return model.getNotes();
+            return noteModel.getNotes();
         }
 
-        getActionConfig() {
+        getActions() {
             return {
                 createAvailable: true
             };
@@ -172,7 +172,7 @@
 
         addFinishedListener() {
             $("main input[type='checkbox'").change(function (event) {
-                model.setFinished($(this).val(), event.target.checked)
+                noteModel.setFinished($(this).val(), event.target.checked)
                     .then(() => {
                         $(window).trigger('hashchange');
                     });
@@ -194,13 +194,13 @@
         execute() {
             if($('#id').val()) {
                 // TODO: Note zuerst laden und dann die werte anpassen (ansonsten geht zum beispiel das erledigt datum verloren)
-                model.updateNote($('#id').val(), $('#title').val(), $('#description').val(), $('#importance').val(), $('#duedate').val());
+                noteModel.updateNote($('#id').val(), $('#title').val(), $('#description').val(), $('#importance').val(), $('#duedate').val());
             } else {
-                model.createNote($('#title').val(), $('#description').val(), $('#importance').val(), $('#duedate').val());
+                noteModel.createNote($('#title').val(), $('#description').val(), $('#importance').val(), $('#duedate').val());
             }
             this.redirect("");
         }
     }
 
     namespace.controller = new ApplicationController();
-})(window.app = window.app || {}, window.model.model, window.model.list, window.templates);
+})(window.app = window.app || {}, window.model.note, window.model.header, window.model.list, window.templates);
