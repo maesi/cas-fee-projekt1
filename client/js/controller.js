@@ -144,9 +144,11 @@
 
         addSortListener(markSelected) {
             $("button[data-sort]").click(function (event) {
-                listModel.setSort(event.target.getAttribute("data-sort"));
-                markSelected('data-sort', listModel.getSort());
-                $(window).trigger('hashchange');
+                if(listModel.getSort() !== event.target.getAttribute("data-sort"))  {
+                    listModel.setSort(event.target.getAttribute("data-sort"));
+                    markSelected('data-sort', listModel.getSort());
+                    $(window).trigger('hashchange');
+                }
             });
             markSelected('data-sort', listModel.getSort());
         }
@@ -191,6 +193,7 @@
     class SaveController extends ActionController {
         execute() {
             if($('#id').val()) {
+                // TODO: Note zuerst laden und dann die werte anpassen (ansonsten geht zum beispiel das erledigt datum verloren)
                 model.updateNote($('#id').val(), $('#title').val(), $('#description').val(), $('#importance').val(), $('#duedate').val());
             } else {
                 model.createNote($('#title').val(), $('#description').val(), $('#importance').val(), $('#duedate').val());
