@@ -127,11 +127,7 @@
         }
 
         setFinished(id, finished) {
-            return this.getNote(id)
-                .then((note) => {
-                    note.erledigt = finished ? momentjs().format('YYYY-MM-DD') : undefined;
-                    return this.update(note);
-                });
+            return rest.setErledigt(id, finished ? momentjs().format('YYYY-MM-DD') : false);
         }
 
         getEmptyNote() {

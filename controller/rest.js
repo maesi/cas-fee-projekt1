@@ -15,6 +15,9 @@ router.get("/notes", function (req, res) {
 router.post("/notes", function (req, res) {
    storage.create(req.body, callbackFactory(res))
 });
+router.put("/notes/:id/erledigt", function (req, res) {
+    storage.setErledigt(req.params.id, req.body, callbackFactory(res));
+});
 router.put("/notes/:id", function (req, res) {
     storage.update(req.params.id, req.body, callbackFactory(res))
 });

@@ -29,11 +29,16 @@
         return execute({url:'/notes/' + id, method: 'PUT', data: note});
     }
 
+    function setErledigt(id, erledigt) {
+        return execute({url:'/notes/' + id + "/erledigt", method: 'PUT', data: {erledigt: erledigt}});
+    }
+
     service.rest = {
         getAll : getAll,
         getById: getById,
         create: create,
-        update: update
+        update: update,
+        setErledigt: setErledigt
     };
 
 }(window.service = window.service || { }, jQuery));

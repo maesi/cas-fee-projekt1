@@ -22,6 +22,10 @@ function update(id, note, callback) {
     db.update({ _id: id }, note, callbackFactory(callback));
 }
 
+function setErledigt(id, obj, callback) {
+    db.update({_id: id}, {$set : obj}, callback);
+}
+
 function getAll(callback) {
     db.find({}, callbackFactory(callback));
 }
@@ -33,6 +37,7 @@ function getById(id, callback) {
 module.exports = {
     create: create,
     update: update,
+    setErledigt: setErledigt,
     getAll: getAll,
     getById: getById
 };
